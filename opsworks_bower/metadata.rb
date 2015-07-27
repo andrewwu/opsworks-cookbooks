@@ -1,0 +1,5 @@
+name        "opsworks_bower"
+description "Installs bower on an OpsWorks Rails application server"
+maintainer  "Andrew Wu"
+license     "MIT"
+version     "1.0.0"
