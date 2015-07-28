@@ -5,7 +5,7 @@ include_recipe 'deploy'
 node[:deploy].each do |application, deploy|
 
   if deploy[:application_type] != 'rails'
-    Chef::Log.debug("Skipping opsworks_sidekiq::deploy application #{application} as it is not an Rails app")
+    Chef::Log.info("Skipping opsworks_sidekiq::deploy application #{application} as it is not an Rails app")
     next
   end
 
@@ -26,7 +26,7 @@ node[:deploy].each do |application, deploy|
     variables(:memcached => (deploy[:memcached] || {}), :environment => deploy[:rails_env])
   end
 
-  Chef::Log.debug("Sidekiq set restart command to #{node[:sidekiq][application][:restart_command]}")
+  Chef::Log.info("Sidekiq set restart command to #{node[:sidekiq][application][:restart_command]}")
   node.set[:opsworks][:rails_stack][:restart_command] = node[:sidekiq][application][:restart_command]
 
   opsworks_deploy do

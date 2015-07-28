@@ -6,7 +6,7 @@ include_recipe "opsworks_sidekiq::service"
 node[:deploy].each do |application, deploy|
   deploy = node[:deploy][application]
 
-  Chef::Log.debug("Sidekiq2 application.intern is #{application.intern}")
+  Chef::Log.info("Sidekiq2 application.intern is #{application.intern}")
 
   node.default[:deploy][application][:database][:adapter] = OpsWorks::RailsConfiguration.determine_database_adapter(application, node[:deploy][application], "#{node[:deploy][application][:deploy_to]}/current", :force => node[:force_database_adapter_detection])
 
