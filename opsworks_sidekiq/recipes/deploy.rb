@@ -26,6 +26,7 @@ node[:deploy].each do |application, deploy|
     variables(:memcached => (deploy[:memcached] || {}), :environment => deploy[:rails_env])
   end
 
+  Chef::Log.debug("Sidekiq set restart command to #{node[:sidekiq][application][:restart_command]}")
   node.set[:opsworks][:rails_stack][:restart_command] = node[:sidekiq][application][:restart_command]
 
   opsworks_deploy do
