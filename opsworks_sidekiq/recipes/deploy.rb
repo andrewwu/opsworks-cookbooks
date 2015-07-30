@@ -18,7 +18,7 @@ node[:deploy].each do |application, deploy|
   include_recipe "opsworks_sidekiq::setup"
 
   if !File.exist?("#{deploy[:deploy_to]}/shared/app.env")
-    include_recipe "opsworks_sidekiq::create_env_file"
+    include_recipe "opsworks_nodejs::create_env_file"
   end
 
   template "#{deploy[:deploy_to]}/shared/config/memcached.yml" do
