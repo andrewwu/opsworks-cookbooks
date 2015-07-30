@@ -11,4 +11,3 @@ recipe 'opsworks_sidekiq::undeploy',  'Undeploy sidekiq worker.'
 recipe 'opsworks_sidekiq::stop',      'Stop sidekiq worker.'
 
 depends 'deploy'
-depends 'redis-config'
