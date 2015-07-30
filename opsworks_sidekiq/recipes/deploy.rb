@@ -28,7 +28,7 @@ node[:deploy].each do |application, deploy|
 
   # node.set[:opsworks][:rails_stack][:restart_command] = node[:sidekiq][application][:restart_command]
   execute "restart sidekiq" do
-    node[:sidekiq][application][:restart_command]
+    command node[:sidekiq][application][:restart_command]
   end
 
   opsworks_deploy do
