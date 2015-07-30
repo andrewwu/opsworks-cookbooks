@@ -17,6 +17,10 @@ node[:deploy].each do |application, deploy|
 
   include_recipe "opsworks_sidekiq::setup"
 
+  if !File.exist?("#{deploy[:deploy_to]}/shared/app.env")
+    include_recipe "opsworks_sidekiq::create_env_file"
+  end
+
   template "#{deploy[:deploy_to]}/shared/config/memcached.yml" do
     cookbook "rails"
     source "memcached.yml.erb"
@@ -26,10 +30,7 @@ node[:deploy].each do |application, deploy|
     variables(:memcached => (deploy[:memcached] || {}), :environment => deploy[:rails_env])
   end
 
-  # node.set[:opsworks][:rails_stack][:restart_command] = node[:sidekiq][application][:restart_command]
-  execute "restart sidekiq" do
-    command node[:sidekiq][application][:restart_command]
-  end
+  node.set[:opsworks][:rails_stack][:restart_command] = node[:sidekiq][application][:restart_command]
 
   opsworks_deploy do
     deploy_data deploy
