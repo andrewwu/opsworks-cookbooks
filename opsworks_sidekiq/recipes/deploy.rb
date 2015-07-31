@@ -16,13 +16,7 @@ node[:deploy].each do |application, deploy|
   end
 
   include_recipe "opsworks_sidekiq::setup"
-
-  if !File.exist?("#{deploy[:deploy_to]}/shared/app.env")
-    Chef::Log.info("FILE DOESNT EXISTS LOL")
-    include_recipe "opsworks_nodejs::create_env_file"
-  else
-    Chef::Log.info("FILE EXISTS LOL")
-  end
+  include_recipe "opsworks_nodejs::create_env_file"
 
   template "#{deploy[:deploy_to]}/shared/config/memcached.yml" do
     cookbook "rails"
